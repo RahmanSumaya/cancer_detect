@@ -2,42 +2,179 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Leukemia Assessment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leukemia Diagnostic Assessment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #090d16 0%, #111827 100%);
+            min-height: 100vh;
+            color: #f3f4f6;
+        }
+        .assessment-card {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            overflow: hidden;
+        }
+        .card-header-gradient {
+            background: linear-gradient(90deg, #dc2626 0%, #991b1b 100%);
+            border-bottom: none;
+            padding: 1.75rem;
+        }
+        .section-title {
+            color: #ef4444;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+            padding-bottom: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .form-label {
+            color: #9ca3af;
+            font-weight: 500;
+            font-size: 0.88rem;
+            margin-bottom: 0.5rem;
+        }
+        .form-control, .form-select {
+            background: rgba(31, 41, 55, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 0.65rem 1rem;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            background: rgba(31, 41, 55, 0.8);
+            border-color: #ef4444;
+            color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+        }
+        .form-control::placeholder {
+            color: #4b5563;
+            font-size: 0.85rem;
+        }
+        .form-select option {
+            background: #111827;
+            color: #ffffff;
+        }
+        .btn-compute {
+            background: linear-gradient(90deg, #dc2626 0%, #991b1b 100%);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 1rem;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
+        }
+        .btn-compute:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(239, 68, 68, 0.5);
+            opacity: 0.95;
+        }
+        .btn-home {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+        .btn-home:hover {
+            background: #ffffff;
+            color: #111827 !important;
+        }
+        .result-box {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(153, 27, 27, 0.15) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 16px;
+            color: #fca5a5;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+    </style>
 </head>
-<body class="bg-light">
-    <div class="container mt-5">
+<body>
+    <div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-md-10 mb-5">
-                <div class="card shadow">
-                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">Leukemia Diagnostic Assessment Panel</h4>
-                        <a href="/" class="btn btn-sm btn-outline-light">Back to Home</a>
+            <div class="col-xl-10 col-lg-11">
+                <div class="card assessment-card shadow-2xl">
+                    
+                    <div class="card-header-gradient d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0 text-white d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-droplet text-white"></i> 
+                            Leukemia Diagnostic Assessment Panel
+                        </h4>
+                        <a href="/" class="btn btn-sm btn-home text-white d-flex align-items-center gap-1">
+                            <i class="fa-solid fa-house"></i> Back to Home
+                        </a>
                     </div>
-                    <div class="card-body">
+                    
+                    <div class="card-body p-4 p-md-5">
+                        
                         {% if result %}
-                            <div class="alert alert-danger text-center">
-                                <h5>{{ result }}</h5>
+                            <div class="result-box p-4 mb-5 text-center animate__animated animate__fadeIn">
+                                <h5 class="mb-0 fw-bold">
+                                    <i class="fa-solid fa-square-poll-horizontal me-2"></i> 
+                                    Diagnostic Matrix Outcome: {{ result }}
+                                </h5>
                             </div>
                         {% endif %}
 
                         <form method="POST">
-                            <h5 class="text-secondary border-bottom pb-2">Continuous Lab Metrics</h5>
-                            <div class="row mb-4">
-                                <div class="col-md-3 mb-3"><label class="form-label">Age</label><input type="number" step="1" name="Age" class="form-control" required></div>
-                                <div class="col-md-3 mb-3"><label class="form-label">BMI</label><input type="number" step="any" name="BMI" class="form-control" required></div>
-                                <div class="col-md-3 mb-3"><label class="form-label">WBC Count</label><input type="number" step="any" name="WBC_Count" class="form-control" required></div>
-                                <div class="col-md-3 mb-3"><label class="form-label">RBC Count</label><input type="number" step="any" name="RBC_Count" class="form-control" required></div>
-                                <div class="col-md-4 mb-3"><label class="form-label">Platelet Count</label><input type="number" step="any" name="Platelet_Count" class="form-control" required></div>
-                                <div class="col-md-4 mb-3"><label class="form-label">Hemoglobin Level</label><input type="number" step="any" name="Hemoglobin_Level" class="form-control" required></div>
-                                <div class="col-md-4 mb-3"><label class="form-label">Bone Marrow Blasts (%)</label><input type="number" step="any" name="Bone_Marrow_Blasts" class="form-control" required></div>
+                            
+                            <h5 class="section-title mb-4">
+                                <i class="fa-solid fa-flask-vial me-2"></i>Continuous Lab Metrics
+                            </h5>
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-3">
+                                    <label class="form-label">Age (Years)</label>
+                                    <input type="number" step="1" name="Age" class="form-control" required placeholder="e.g. 45">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">BMI</label>
+                                    <input type="number" step="any" name="BMI" class="form-control" required placeholder="e.g. 24.5">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">WBC Count</label>
+                                    <input type="number" step="any" name="WBC_Count" class="form-control" required placeholder="Cells/µL">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">RBC Count</label>
+                                    <input type="number" step="any" name="RBC_Count" class="form-control" required placeholder="Million/µL">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Platelet Count</label>
+                                    <input type="number" step="any" name="Platelet_Count" class="form-control" required placeholder="Plts/µL">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Hemoglobin Level</label>
+                                    <input type="number" step="any" name="Hemoglobin_Level" class="form-control" required placeholder="g/dL">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Bone Marrow Blasts (%)</label>
+                                    <input type="number" step="any" name="Bone_Marrow_Blasts" class="form-control" required placeholder="e.g. 12.4">
+                                </div>
                             </div>
 
-                            <h5 class="text-secondary border-bottom pb-2">Demographic & Background Indicators</h5>
-                            <div class="row mb-4">
-                                <div class="col-md-3 mb-3"><label class="form-label">Country</label><input type="text" name="Country" class="form-control" placeholder="e.g. USA" required></div>
-                                <div class="col-md-3 mb-3"><label class="form-label">Ethnicity</label><input type="text" name="Ethnicity" class="form-control" placeholder="e.g. Caucasian" required></div>
-                                <div class="col-md-3 mb-3">
+                            <h5 class="section-title mb-4">
+                                <i class="fa-solid fa-earth-americas me-2"></i>Demographic & Background Indicators
+                            </h5>
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-3">
+                                    <label class="form-label">Country</label>
+                                    <input type="text" name="Country" class="form-control" placeholder="e.g. USA" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Ethnicity</label>
+                                    <input type="text" name="Ethnicity" class="form-control" placeholder="e.g. Caucasian" required>
+                                </div>
+                                <div class="col-md-3">
                                     <label class="form-label">Socioeconomic Status</label>
                                     <select name="Socioeconomic_Status" class="form-select" required>
                                         <option value="Low">Low</option>
@@ -45,7 +182,7 @@
                                         <option value="High">High</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-3">
                                     <label class="form-label">Urban / Rural</label>
                                     <select name="Urban_Rural" class="form-select" required>
                                         <option value="Urban">Urban</option>
@@ -54,65 +191,67 @@
                                 </div>
                             </div>
 
-                            <h5 class="text-secondary border-bottom pb-2">Clinical History & Exposure Flags</h5>
-                            <div class="row">
-                                <div class="col-md-3 mb-3">
+                            <h5 class="section-title mb-4">
+                                <i class="fa-solid fa-notes-medical me-2"></i>Clinical History & Exposure Flags
+                            </h5>
+                            <div class="row g-3 mb-5">
+                                <div class="col-md-3">
                                     <label class="form-label">Gender</label>
                                     <select name="Gender" class="form-select" required>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-3">
                                     <label class="form-label">Genetic Mutation</label>
                                     <select name="Genetic_Mutation" class="form-select" required>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-3">
                                     <label class="form-label">Family History</label>
                                     <select name="Family_History" class="form-select" required>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-3">
                                     <label class="form-label">Smoking Status</label>
                                     <select name="Smoking_Status" class="form-select" required>
                                         <option value="No">Non-smoker</option>
                                         <option value="Yes">Smoker</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-3">
                                     <label class="form-label">Alcohol Consumption</label>
                                     <select name="Alcohol_Consumption" class="form-select" required>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-3">
                                     <label class="form-label">Radiation Exposure</label>
                                     <select name="Radiation_Exposure" class="form-select" required>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-3">
                                     <label class="form-label">Infection History</label>
                                     <select name="Infection_History" class="form-select" required>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-3">
                                     <label class="form-label">Chronic Illness</label>
                                     <select name="Chronic_Illness" class="form-select" required>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-4">
                                     <label class="form-label">Immune Disorders</label>
                                     <select name="Immune_Disorders" class="form-select" required>
                                         <option value="No">No</option>
@@ -120,8 +259,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-danger w-100 mt-4 fw-bold">Compute Leukemia Assessment Matrix</button>
+
+                            <button type="submit" class="btn btn-compute w-100 d-flex align-items-center justify-content-center gap-2">
+                                <i class="fa-solid fa-calculator"></i> Compute Leukemia Assessment Matrix
+                            </button>
                         </form>
+                        
                     </div>
                 </div>
             </div>

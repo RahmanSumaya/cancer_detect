@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OncoPredict - Oncology Diagnostics Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #060814 0%, #0b1120 100%);
+            min-height: 100vh;
+            color: #f3f4f6;
+        }
+        .hero-section {
+            padding: 4rem 0 2rem 0;
+            text-align: center;
+        }
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #38bdf8 0%, #818cf8 100%);
+            background-clip: text;              
+            -webkit-background-clip: text;        
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .hero-subtitle {
+            color: #9ca3af;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0.5rem auto 2rem auto;
+        }
+        .panel-card {
+            background: rgba(17, 24, 39, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .panel-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(17, 24, 39, 0.75);
+            color: inherit;
+        }
+        .icon-box {
+            width: 55px;
+            height: 55px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Specific Themes for Cancer Types */
+        .breast-theme .icon-box { background: rgba(236, 72, 153, 0.15); color: #ec4899; }
+        .breast-theme:hover { box-shadow: 0 10px 30px rgba(236, 72, 153, 0.15); }
+        
+        .leukemia-theme .icon-box { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .leukemia-theme:hover { box-shadow: 0 10px 30px rgba(239, 68, 68, 0.15); }
+        
+        .prostate-theme .icon-box { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+        .prostate-theme:hover { box-shadow: 0 10px 30px rgba(245, 158, 11, 0.15); }
+
+        .lung-theme .icon-box { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+        .lung-theme:hover { box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15); }
+
+        .colorectal-theme .icon-box { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
+        .colorectal-theme:hover { box-shadow: 0 10px 30px rgba(139, 92, 246, 0.15); }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+        .card-desc {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .action-link {
+            font-size: 0.88rem;
+            font-weight: 500;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.2s;
+        }
+        .panel-card:hover .action-link {
+            gap: 0.75rem;
+        }
+        .breast-theme .action-link { color: #ec4899; }
+        .leukemia-theme .action-link { color: #ef4444; }
+        .prostate-theme .action-link { color: #f59e0b; }
+        .lung-theme .action-link { color: #10b981; }
+        .colorectal-theme .action-link { color: #8b5cf6; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="hero-section">
+            <h1 class="hero-title">Oncology Intelligence Hub</h1>
+            <p class="hero-subtitle">Select a specialized diagnostic dashboard below to begin multi-metric clinical screening and predictive analysis.</p>
+        </div>
+
+        <div class="row g-4 justify-content-center mb-5">
+            
+            <div class="col-md-6 col-xl-4">
+                <a href="/predict/breast" class="card panel-card p-4 breast-theme">
+                    <div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-ribbon"></i>
+                        </div>
+                        <h5 class="card-title">Breast Cancer Panel</h5>
+                        <p class="card-desc">Evaluates metabolic and inflammatory bio-markers including Glucose, Insulin, HOMA, Leptin, and Resistin levels.</p>
+                    </div>
+                    <div class="action-link">
+                        Launch Assessment <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+                <a href="/predict/leukemia" class="card panel-card p-4 leukemia-theme">
+                    <div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-droplet"></i>
+                        </div>
+                        <h5 class="card-title">Leukemia Assessment</h5>
+                        <p class="card-desc">Analyzes detailed hematological data including complete WBC/RBC counts, Hemoglobin, and Bone Marrow blast percentages.</p>
+                    </div>
+                    <div class="action-link">
+                        Launch Assessment <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+                <a href="/predict/prostate" class="card panel-card p-4 prostate-theme">
+                    <div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-shield-virus"></i>
+                        </div>
+                        <h5 class="card-title">Prostate Cancer Panel</h5>
+                        <p class="card-desc">Computes risks based on patient vitals, lifestyle metrics, family mapping, stress tracking, and historical exams.</p>
+                    </div>
+                    <div class="action-link">
+                        Launch Assessment <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+                <a href="/predict/lung" class="card panel-card p-4 lung-theme">
+                    <div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-lungs"></i>
+                        </div>
+                        <h5 class="card-title">Lung Cancer Matrix</h5>
+                        <p class="card-desc">Processes environmental exposures, respiratory symptom indicators, age parameters, and lifestyle factors.</p>
+                    </div>
+                    <div class="action-link">
+                        Launch Assessment <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+                 <a href="/predict/colorectal" class="card panel-card p-4 colorectal-theme">
+                     <div>
+                        <div class="icon-box">
+                            <i class="fa-solid fa-capsules"></i>
+                        </div>
+                        <h5 class="card-title">Colorectal Screening</h5>
+                        <p class="card-desc">Examines digestive history flags, clinical trial criteria datasets, lifestyle parameters, and genetic components.</p>
+                    </div>
+                    <div class="action-link">
+                        Launch Assessment <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                 </a>
+             </div>
+        </div>
+    </div>
+
+</body>
+</html>
