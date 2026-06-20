@@ -3,10 +3,10 @@ import pickle
 import numpy as np
 import pandas as pd
 from flask import Flask, render_template, request, redirect, url_for
+# Update your import to the clean global library module
+from google import genai
 
 app = Flask(__name__)
-
-# --- HOME ROUTE ---
 # --- HOME ROUTE ---
 @app.route('/')
 def home():
@@ -223,6 +223,51 @@ def predict_lung():
             result = f"Error during evaluation: {str(e)}"
             
     return render_template('predict_lung.html', result=result)
+
+# --- COLORECTAL CANCER ROUTE ---
+@app.route('/predict/colorectal', methods=['GET', 'POST'])
+def predict_colorectal():
+    result = None
+    
+    if request.method == 'POST':
+        try:
+            # 1. Gather values from the form exactly matching your raw dataset features
+            raw_features = {
+                "Age": float(request.form.get("Age")),
+                "Gender": request.form.get("Gender"),
+                "BMI": float(request.form.get("BMI")),
+                "Lifestyle": request.form.get("Lifestyle"),
+                "Ethnicity": request.form.get("Ethnicity"),
+                "Family_History_CRC": request.form.get("Family_History_CRC"),
+                "Pre-existing Conditions": request.form.get("Pre_existing_Conditions"),
+                "Carbohydrates (g)": float(request.form.get("Carbohydrates")),
+                "Proteins (g)": float(request.form.get("Proteins")),
+                "Fats (g)": float(request.form.get("Fats")),
+                "Vitamin A (IU)": float(request.form.get("Vitamin_A")),
+                "Vitamin C (mg)": float(request.form.get("Vitamin_C")),
+                "Iron (mg)": float(request.form.get("Iron"))
+            }
+            
+            # Convert the record to a structured DataFrame
+            input_df = pd.DataFrame([raw_features])
+            
+            # 2. Load the pipeline bundle
+            with open('models/colorectral_cancer.pkl', 'rb') as f:
+                pipeline = pickle.load(f)
+                
+            # 3. Predict directly (The pipeline automatically handles scaling, encoding, and K-Best selection)
+            prediction = pipeline.predict(input_df)[0]
+            
+            # 4. Format Output (Adjust string vs integer target values based on your source data labels)
+            if str(prediction).lower() in ['1', 'high', 'positive']:
+                result = "Assessment Result: High Colorectal Risk Detected"
+            else:
+                result = "Assessment Result: Low/Normal Colorectal Risk"
+                
+        except Exception as e:
+            result = f"Error during evaluation: {str(e)}"
+            
+    return render_template('predict_colorectal.html', result=result)
 # --- CRITICAL: This keeps the server running ---
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
