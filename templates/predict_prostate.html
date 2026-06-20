@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prostate Cancer Assessment</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 mb-5">
+                <div class="card shadow">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Prostate Cancer Risk Assessment Panel</h4>
+                        <a href="/" class="btn btn-sm btn-outline-light">Back to Home</a>
+                    </div>
+                    <div class="card-body">
+                        {% if result %}
+                            <div class="alert alert-warning text-center">
+                                <h5>{{ result }}</h5>
+                            </div>
+                        {% endif %}
+
+                        <form method="POST">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label"><strong>Age</strong></label>
+                                    <input type="number" step="1" name="age" class="form-control" required placeholder="Years">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label"><strong>BMI</strong></label>
+                                    <input type="number" step="any" name="bmi" class="form-control" required placeholder="e.g. 24.5">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label"><strong>Sleep Hours</strong></label>
+                                    <input type="number" step="any" name="sleep_hours" class="form-control" required placeholder="Hours/Night">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label"><strong>Smoker Status</strong></label>
+                                    <select name="smoker" class="form-select" required>
+                                        <option value="No">No</option>
+                                        <option value="Yes">Yes</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label"><strong>Alcohol Consumption</strong></label>
+                                    <select name="alcohol_consumption" class="form-select" required>
+                                        <option value="Low">Low</option>
+                                        <option value="Moderate">Moderate</option>
+                                        <option value="High">High</option>
+                                        <option value="Unknown">Unknown</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label"><strong>Diet Type</strong></label>
+                                    <select name="diet_type" class="form-select" required>
+                                        <option value="Healthy">Healthy</option>
+                                        <option value="Mixed">Mixed</option>
+                                        <option value="Fatty">Fatty</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label"><strong>Physical Activity Level</strong></label>
+                                    <select name="physical_activity_level" class="form-select" required>
+                                        <option value="Low">Low</option>
+                                        <option value="Moderate">Moderate</option>
+                                        <option value="High">High</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label"><strong>Family History of Cancer</strong></label>
+                                    <select name="family_history" class="form-select" required>
+                                        <option value="No">No</option>
+                                        <option value="Yes">Yes</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label"><strong>Mental Stress Level</strong></label>
+                                    <select name="mental_stress_level" class="form-select" required>
+                                        <option value="Low">Low</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="High">High</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label"><strong>Regular Health Checkups</strong></label>
+                                    <select name="regular_health_checkup" class="form-select" required>
+                                        <option value="No">No</option>
+                                        <option value="Yes">Yes</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label"><strong>Prostate Exam Done</strong></label>
+                                    <select name="prostate_exam_done" class="form-select" required>
+                                        <option value="No">No</option>
+                                        <option value="Yes">Yes</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-warning w-100 mt-3 text-dark fw-bold">Analyze Prostate Risk Dataset</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
