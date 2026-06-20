@@ -7,11 +7,10 @@ from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
 
 # --- HOME ROUTE ---
+# --- HOME ROUTE ---
 @app.route('/')
 def home():
-    # Automatically redirects you to the breast cancer page when you open the site
-    return redirect(url_for('predict_breast'))
-
+    return render_template('home.html')
 # --- BREAST CANCER ROUTE ---
 # --- BREAST CANCER ROUTE ---
 @app.route('/predict/breast', methods=['GET', 'POST'])

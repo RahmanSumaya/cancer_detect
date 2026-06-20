@@ -2,49 +2,147 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Prostate Cancer Assessment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prostate Cancer Risk Assessment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0b0f19 0%, #1a1528 100%);
+            min-height: 100vh;
+            color: #f3f4f6;
+        }
+        .assessment-card {
+            background: rgba(26, 21, 40, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 22px;
+            overflow: hidden;
+        }
+        .card-header-gradient {
+            background: linear-gradient(90deg, #d97706 0%, #b45309 100%);
+            border-bottom: none;
+            padding: 1.6rem;
+        }
+        .form-label {
+            color: #d1d5db;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+        }
+        .form-control, .form-select {
+            background: rgba(17, 24, 39, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 0.65rem 1rem;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            background: rgba(17, 24, 39, 0.85);
+            border-color: #f59e0b;
+            color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
+        }
+        .form-control::placeholder {
+            color: #4b5563;
+            font-size: 0.85rem;
+        }
+        .form-select option {
+            background: #111827;
+            color: #ffffff;
+        }
+        .btn-analyze {
+            background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+            border: none;
+            color: #0f172a;
+            font-weight: 700;
+            padding: 0.9rem;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+        }
+        .btn-analyze:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(217, 119, 6, 0.5);
+            color: #0f172a;
+            opacity: 0.95;
+        }
+        .btn-home {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+        .btn-home:hover {
+            background: #ffffff;
+            color: #0f172a !important;
+        }
+        .result-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.12) 100%);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 16px;
+            color: #fef08a;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+    </style>
 </head>
-<body class="bg-light">
-    <div class="container mt-5">
+<body>
+    <div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-md-8 mb-5">
-                <div class="card shadow">
-                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">Prostate Cancer Risk Assessment Panel</h4>
-                        <a href="/" class="btn btn-sm btn-outline-light">Back to Home</a>
+            <div class="col-xl-9 col-lg-10">
+                <div class="card assessment-card shadow-2xl">
+                    
+                    <div class="card-header-gradient d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0 text-white d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-shield-virus"></i> 
+                            Prostate Cancer Risk Assessment Panel
+                        </h4>
+                        <a href="/" class="btn btn-sm btn-home text-white d-flex align-items-center gap-1">
+                            <i class="fa-solid fa-house"></i> Back to Home
+                        </a>
                     </div>
-                    <div class="card-body">
+                    
+                    <div class="card-body p-4 p-md-5">
+                        
                         {% if result %}
-                            <div class="alert alert-warning text-center">
-                                <h5>{{ result }}</h5>
+                            <div class="result-box p-4 mb-4 text-center animate__animated animate__fadeIn">
+                                <h5 class="mb-0 fw-bold">
+                                    <i class="fa-solid fa-chart-pie me-2"></i> 
+                                    Pipeline Prediction Result: {{ result }}
+                                </h5>
                             </div>
                         {% endif %}
 
                         <form method="POST">
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label"><strong>Age</strong></label>
+                            <div class="row g-4">
+                                
+                                <div class="col-md-4">
+                                    <label class="form-label"><i class="fa-solid fa-user-clock me-1 text-warning"></i> Age</label>
                                     <input type="number" step="1" name="age" class="form-control" required placeholder="Years">
                                 </div>
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label"><strong>BMI</strong></label>
+                                <div class="col-md-4">
+                                    <label class="form-label"><i class="fa-solid fa-weight-scale me-1 text-warning"></i> BMI</label>
                                     <input type="number" step="any" name="bmi" class="form-control" required placeholder="e.g. 24.5">
                                 </div>
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label"><strong>Sleep Hours</strong></label>
+                                <div class="col-md-4">
+                                    <label class="form-label"><i class="fa-solid fa-bed me-1 text-warning"></i> Sleep Hours</label>
                                     <input type="number" step="any" name="sleep_hours" class="form-control" required placeholder="Hours/Night">
                                 </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label"><strong>Smoker Status</strong></label>
+                                <div class="col-md-6">
+                                    <label class="form-label"><i class="fa-solid fa-smoking me-1 text-warning"></i> Smoker Status</label>
                                     <select name="smoker" class="form-select" required>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label"><strong>Alcohol Consumption</strong></label>
+                                <div class="col-md-6">
+                                    <label class="form-label"><i class="fa-solid fa-wine-glass me-1 text-warning"></i> Alcohol Consumption</label>
                                     <select name="alcohol_consumption" class="form-select" required>
                                         <option value="Low">Low</option>
                                         <option value="Moderate">Moderate</option>
@@ -52,54 +150,60 @@
                                         <option value="Unknown">Unknown</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label"><strong>Diet Type</strong></label>
+                                <div class="col-md-6">
+                                    <label class="form-label"><i class="fa-solid fa-utensils me-1 text-warning"></i> Diet Type</label>
                                     <select name="diet_type" class="form-select" required>
                                         <option value="Healthy">Healthy</option>
                                         <option value="Mixed">Mixed</option>
                                         <option value="Fatty">Fatty</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label"><strong>Physical Activity Level</strong></label>
+                                <div class="col-md-6">
+                                    <label class="form-label"><i class="fa-solid fa-child-hitting-alone me-1 text-warning"></i> Physical Activity Level</label>
                                     <select name="physical_activity_level" class="form-select" required>
                                         <option value="Low">Low</option>
                                         <option value="Moderate">Moderate</option>
                                         <option value="High">High</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label"><strong>Family History of Cancer</strong></label>
+                                <div class="col-md-6">
+                                    <label class="form-label"><i class="fa-solid fa-dna me-1 text-warning"></i> Family History of Cancer</label>
                                     <select name="family_history" class="form-select" required>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label"><strong>Mental Stress Level</strong></label>
+                                <div class="col-md-6">
+                                    <label class="form-label"><i class="fa-solid fa-brain me-1 text-warning"></i> Mental Stress Level</label>
                                     <select name="mental_stress_level" class="form-select" required>
                                         <option value="Low">Low</option>
                                         <option value="Medium">Medium</option>
                                         <option value="High">High</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label"><strong>Regular Health Checkups</strong></label>
+                                <div class="col-md-6">
+                                    <label class="form-label"><i class="fa-solid fa-calendar-check me-1 text-warning"></i> Regular Health Checkups</label>
                                     <select name="regular_health_checkup" class="form-select" required>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label"><strong>Prostate Exam Done</strong></label>
+                                <div class="col-md-6">
+                                    <label class="form-label"><i class="fa-solid fa-stethoscope me-1 text-warning"></i> Prostate Exam Done</label>
                                     <select name="prostate_exam_done" class="form-select" required>
                                         <option value="No">No</option>
                                         <option value="Yes">Yes</option>
                                     </select>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-warning w-100 mt-3 text-dark fw-bold">Analyze Prostate Risk Dataset</button>
+                            
+                            <div class="mt-5">
+                                <button type="submit" class="btn btn-analyze w-100 d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fa-solid fa-magnifying-glass-chart"></i> Analyze Prostate Risk Dataset
+                                </button>
+                            </div>
                         </form>
+                        
                     </div>
                 </div>
             </div>
