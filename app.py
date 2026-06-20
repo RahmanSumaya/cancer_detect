@@ -168,6 +168,62 @@ def predict_leukemia():
             result = f"Error during evaluation: {str(e)}"
             
     return render_template('predict_leukemia.html', result=result)
+
+# --- LUNG CANCER ROUTE ---
+@app.route('/predict/lung', methods=['GET', 'POST'])
+def predict_lung():
+    result = None
+    
+    # Internal maps to mimic LabelEncoder transformations used on the raw text
+    gender_map = {"Male": 1, "Female": 0}  
+    binary_map = {"Yes": 1, "No": 0}      # Standard survey scale: Yes=1, No=0 (or 2/1 depending on source)
+    
+    if request.method == 'POST':
+        try:
+            # 1. Gather all 14 form inputs based on exact column names
+            # Note the trailing spaces in 'FATIGUE ' and 'ALLERGY ' from the original dataset columns!
+            raw_features = {
+                "GENDER": gender_map.get(request.form.get("GENDER")),
+                "AGE": float(request.form.get("AGE")),
+                "SMOKING": binary_map.get(request.form.get("SMOKING")),
+                "YELLOW_FINGERS": binary_map.get(request.form.get("YELLOW_FINGERS")),
+                "ANXIETY": binary_map.get(request.form.get("ANXIETY")),
+                "PEER_PRESSURE": binary_map.get(request.form.get("PEER_PRESSURE")),
+                "CHRONIC DISEASE": binary_map.get(request.form.get("CHRONIC_DISEASE")),
+                "FATIGUE ": binary_map.get(request.form.get("FATIGUE")),
+                "ALLERGY ": binary_map.get(request.form.get("ALLERGY")),
+                "WHEEZING": binary_map.get(request.form.get("WHEEZING")),
+                "ALCOHOL CONSUMING": binary_map.get(request.form.get("ALCOHOL")),
+                "COUGHING": binary_map.get(request.form.get("COUGHING")),
+                "SHORTNESS OF BREATH": binary_map.get(request.form.get("SHORTNESS")),
+                "SWALLOWING DIFFICULTY": binary_map.get(request.form.get("SWALLOWING")),
+                "CHEST PAIN": binary_map.get(request.form.get("CHEST_PAIN"))
+            }
+            
+            # 2. Load the model bundle
+            with open('models/lung_cancer.pkl', 'rb') as f:
+                bundle = pickle.load(f)
+                
+            model = bundle['model']
+            scaler = bundle['scaler']
+            feature_order = bundle['features']
+            
+            # 3. Restructure as a DataFrame to keep the feature matrix labels intact for scaling
+            input_df = pd.DataFrame([raw_features], columns=feature_order)
+            
+            # 4. Scale and Predict
+            input_scaled = scaler.transform(input_df)
+            prediction = model.predict(input_scaled)[0]
+            
+            if prediction == 1:
+                result = "Assessment Result: Positive (High Risk of Lung Cancer)"
+            else:
+                result = "Assessment Result: Negative (Low Risk of Lung Cancer)"
+                
+        except Exception as e:
+            result = f"Error during evaluation: {str(e)}"
+            
+    return render_template('predict_lung.html', result=result)
 # --- CRITICAL: This keeps the server running ---
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
